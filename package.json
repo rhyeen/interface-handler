@@ -1,0 +1,12 @@
+{
+  "name": "interface-handler",
+  "version": "0.0.1",
+  "contributors": [
+    "Ryan Saunders"
+  ],
+  "license": "BSD-3-Clause",
+  "repository": "rhyeen/interface-handler",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
