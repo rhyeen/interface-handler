@@ -31,18 +31,18 @@ export const runState = () => {
 function getBaseEndpoint() {
   switch (runState()) {
     case RUN_ENV.LOCAL:
-      return baseEndpoints.localBaseEndpoint;
+      return BaseEndpoint.localBaseEndpoint;
     case RUN_ENV.PRODUCTION:
-      return baseEndpoints.prodBaseEndpoint;
+      return BaseEndpoint.prodBaseEndpoint;
     default:
       return new Error(`Invalid run state: ${runState()}`);
   }
 };
 
 function setLocalBaseEndpoint(baseEndpoint) {
-  baseEndpoints.localBaseEndpoint = baseEndpoint;
+  BaseEndpoint.localBaseEndpoint = baseEndpoint;
 }
 
 function setProdBaseEndpoint(baseEndpoint) {
-  baseEndpoints.prodBaseEndpoint = baseEndpoint;
+  BaseEndpoint.prodBaseEndpoint = baseEndpoint;
 }

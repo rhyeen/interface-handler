@@ -1,4 +1,4 @@
-import { baseEndpoint } from './interface-state.js';
+import { BaseEndpoint } from './interface-state.js';
 
 export const HTTP_REQUEST = {
   GET: 'get',
@@ -14,11 +14,11 @@ export const Http = {
 };
 
 function baseHttpPost(endpoint, headers, params, bodyData) {
-  return httpJsonRequest(`${baseEndpoint()}/${endpoint}`, HTTP_REQUEST.POST, headers, params, bodyData);
+  return httpJsonRequest(`${BaseEndpoint.getBaseEndpoint()}/${endpoint}`, HTTP_REQUEST.POST, headers, params, bodyData);
 }
 
 function baseHttpGet(endpoint, headers, params) {
-  return httpJsonRequest(`${baseEndpoint()}/${endpoint}`, HTTP_REQUEST.GET, headers, params, null);
+  return httpJsonRequest(`${BaseEndpoint.getBaseEndpoint()}/${endpoint}`, HTTP_REQUEST.GET, headers, params, undefined);
 }
 
 function defaultJsonHeaders() {
@@ -33,7 +33,9 @@ function httpJsonRequest(url, request, headers, params, bodyData) {
     headers = defaultJsonHeaders()
   }
   url = new URL(url);
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+  if (params) {
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+  }
   return new Promise((resolve, reject) => {
     fetch(url, {
       method: request,
