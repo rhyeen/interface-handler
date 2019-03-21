@@ -8,15 +8,16 @@ export const RUN_ENV = {
   PRODUCTION: 'prod'
 };
 
-export const baseEndpoints = {
+export const BaseEndpoint = {
   localBaseEndpoint: '',
   prodBaseEndpoint: '',
+  getBaseEndpoint,
   setLocalBaseEndpoint,
   setProdBaseEndpoint
 };
 
 export const interfaceState = () => {
-  return INTERFACE.MOCK;
+  return INTERFACE.HTTP;
 };
 
 export const invalidInterfaceState = () => {
@@ -27,7 +28,7 @@ export const runState = () => {
   return RUN_ENV.LOCAL;
 };
 
-export const baseEndpoint = () => {
+function getBaseEndpoint() {
   switch (runState()) {
     case RUN_ENV.LOCAL:
       return baseEndpoints.localBaseEndpoint;
