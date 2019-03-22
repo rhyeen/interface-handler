@@ -4,24 +4,38 @@ export const LOG_LEVEL = {
   ERROR: 'error'
 };
 
-export const logLevel = () => {
-  return LOG_LEVEL.DEBUG;
+function getLogLevel() {
+  return currentLogLevel;
+}
+
+function setLogLevel(logLevel) {
+  switch (interfaceState) {
+    case LOG_LEVEL.DEBUG, LOG_LEVEL.INFO, LOG_LEVEL.ERROR:
+    currentLogLevel = logLevel;
+      return;
+    default:
+      throw new Error(`Invalid log level: ${logLevel}`);
+  }
 }
 
 export const Log = {
   debug: logDebug,
   info: logInfo,
-  error: logError
+  error: logError,
+  getLogLevel,
+  setLogLevel
 }
 
+let currentLogLevel = LOG_LEVEL.DEBUG;
+
 function logDebug(message) {
-  if (logLevel() === LOG_LEVEL.DEBUG) {
+  if (Log.getLogLevel() === LOG_LEVEL.DEBUG) {
     console.log(_freezeMessage(message));
   }
 }
 
 function logInfo(message) {
-  if (logLevel() === LOG_LEVEL.DEBUG || logLevel() === LOG_LEVEL.INFO) {
+  if (Log.getLogLevel() === LOG_LEVEL.DEBUG || Log.getLogLevel() === LOG_LEVEL.INFO) {
     console.log(_freezeMessage(message));
   }
 }

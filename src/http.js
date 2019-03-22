@@ -10,18 +10,18 @@ export const HTTP_REQUEST = {
 export const Http = {
   post: baseHttpPost,
   get: baseHttpGet,
-  defaultJsonHeaders
+  getDefaultJsonHeaders
 };
 
 function baseHttpPost(endpoint, headers, params, bodyData) {
-  return httpJsonRequest(`${BaseEndpoint.getBaseEndpoint()}/${endpoint}`, HTTP_REQUEST.POST, headers, params, bodyData);
+  return httpJsonRequest(`${BaseEndpoint.get()}/${endpoint}`, HTTP_REQUEST.POST, headers, params, bodyData);
 }
 
 function baseHttpGet(endpoint, headers, params) {
-  return httpJsonRequest(`${BaseEndpoint.getBaseEndpoint()}/${endpoint}`, HTTP_REQUEST.GET, headers, params, undefined);
+  return httpJsonRequest(`${BaseEndpoint.get()}/${endpoint}`, HTTP_REQUEST.GET, headers, params, undefined);
 }
 
-function defaultJsonHeaders() {
+function getDefaultJsonHeaders() {
   return {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ function defaultJsonHeaders() {
 
 function httpJsonRequest(url, request, headers, params, bodyData) {
   if (!headers) {
-    headers = defaultJsonHeaders()
+    headers = getDefaultJsonHeaders()
   }
   url = new URL(url);
   if (params) {

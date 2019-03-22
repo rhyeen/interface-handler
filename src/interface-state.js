@@ -1,9 +1,20 @@
-export const INTERFACE = {
+export const InterfaceState = {
+  get: getInterfaceState,
+  set: setInterfaceState,
+  invalid: invalidInterfaceState
+};
+
+export const INTERFACE_STATE = {
   HTTP: 'http',
   MOCK: 'mock'
 };
 
-export const RUN_ENV = {
+export const RunState = {
+  get: getRunState,
+  set: setRunState
+};
+
+export const RUN_STATE = {
   LOCAL: 'local',
   PRODUCTION: 'prod'
 };
@@ -11,31 +22,56 @@ export const RUN_ENV = {
 export const BaseEndpoint = {
   localBaseEndpoint: '',
   prodBaseEndpoint: '',
-  getBaseEndpoint,
+  get: getBaseEndpoint,
   setLocalBaseEndpoint,
   setProdBaseEndpoint
 };
 
-export const interfaceState = () => {
-  return INTERFACE.HTTP;
+let currentInterfaceState = INTERFACE_STATE.MOCK;
+let currentRunState = RUN_STATE.LOCAL;
+
+function getInterfaceState() {
+  return currentInterfaceState;
 };
 
-export const invalidInterfaceState = () => {
-  return new Error(`Invalid interface state: ${interfaceState()}`);
+function setInterfaceState(interfaceState) {
+  switch (interfaceState) {
+    case INTERFACE_STATE.HTTP:
+    case INTERFACE_STATE.MOCK:
+      currentInterfaceState = interfaceState;
+      return;
+    default:
+      throw new Error(`Invalid interface state: ${interfaceState}`);
+  }
+}
+
+function invalidInterfaceState() {
+  return new Error(`Invalid interface state: ${getInterfaceState()}`);
 };
 
-export const runState = () => {
-  return RUN_ENV.LOCAL;
+function getRunState() {
+  return currentRunState;
 };
+
+function setRunState(runState) {
+  switch (runState) {
+    case RUN_STATE.LOCAL:
+    case RUN_STATE.PRODUCTION:
+      currentRunState = runState;
+      return;
+    default:
+      throw new Error(`Invalid run state: ${runState}`);
+  }
+}
 
 function getBaseEndpoint() {
-  switch (runState()) {
-    case RUN_ENV.LOCAL:
+  switch (getRunState()) {
+    case RUN_STATE.LOCAL:
       return BaseEndpoint.localBaseEndpoint;
-    case RUN_ENV.PRODUCTION:
+    case RUN_STATE.PRODUCTION:
       return BaseEndpoint.prodBaseEndpoint;
     default:
-      return new Error(`Invalid run state: ${runState()}`);
+      throw new Error(`Invalid run state: ${getRunState()}`);
   }
 };
 
