@@ -1,7 +1,10 @@
 import { Log } from './logger.js';
 
 export const CALLBACK_TIME = {
-  POST: 200,
+  POST: 500,
+  PUT: 1000,
+  PATCH: 1000,
+  DELETE: 200,
   GET: 200
 };
 

@@ -4,12 +4,16 @@ export const HTTP_REQUEST = {
   GET: 'get',
   POST: 'post',
   PUT: 'put',
-  DELETE: 'delete'
+  DELETE: 'delete',
+  PATCH: 'patch'
 };
 
 export const Http = {
   post: baseHttpPost,
   get: baseHttpGet,
+  put: baseHttpPut,
+  delete: baseHttpDelete,
+  patch: baseHttpPatch,
   getDefaultJsonHeaders
 };
 
@@ -19,6 +23,18 @@ function baseHttpPost(endpoint, headers, params, bodyData) {
 
 function baseHttpGet(endpoint, headers, params) {
   return httpJsonRequest(`${BaseEndpoint.get()}/${endpoint}`, HTTP_REQUEST.GET, headers, params, undefined);
+}
+
+function baseHttpPut(endpoint, headers, params, bodyData) {
+  return httpJsonRequest(`${BaseEndpoint.get()}/${endpoint}`, HTTP_REQUEST.PUT, headers, params, bodyData);
+}
+
+function baseHttpPatch(endpoint, headers, params, bodyData) {
+  return httpJsonRequest(`${BaseEndpoint.get()}/${endpoint}`, HTTP_REQUEST.PATCH, headers, params, bodyData);
+}
+
+function baseHttpDelete(endpoint, headers, params) {
+  return httpJsonRequest(`${BaseEndpoint.get()}/${endpoint}`, HTTP_REQUEST.DELETE, headers, params, undefined);
 }
 
 function getDefaultJsonHeaders() {
